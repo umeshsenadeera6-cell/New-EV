@@ -27,7 +27,7 @@ export default function AdminDashboard() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:5001/api/stations');
+            const response = await axios.get('/api/stations');
             setStations(response.data);
         } catch (error) {
             toast.error('Failed to load admin data');

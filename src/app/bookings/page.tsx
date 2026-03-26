@@ -24,7 +24,7 @@ export default function BookingsPage() {
 
     const fetchBookings = async () => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/bookings/user/${user?.id}`);
+            const response = await axios.get(`/api/bookings/user/${user?.id}`);
             setBookings(response.data);
         } catch (error) {
             toast.error('Failed to load bookings');

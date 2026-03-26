@@ -2,8 +2,9 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-
 import { User } from '@/types';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 interface AuthContextType {
   user: User | null;
@@ -30,23 +31,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     const login = async (email: string, password: string): Promise<User> => {
-        const response = await axios.post('http://localhost:5001/api/auth/login', { email, password });
-        const { token, user: userData } = response.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(userData));
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        setUser(userData);
-        return userData;
+        try {
+            const response = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password });
+            const { token, user: userData } = response.data;
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(userData));
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setUser(userData);
+            return userData;
+        } catch (error) {
+            throw error;
+        }
     };
 
     const register = async (name: string, email: string, password: string): Promise<User> => {
-        const response = await axios.post('http://localhost:5001/api/auth/register', { name, email, password });
-        const { token, user: userData } = response.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(userData));
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        setUser(userData);
-        return userData;
+        try {
+            const response = await axios.post(`${API_BASE_URL}/api/auth/register`, { name, email, password });
+            const { token, user: userData } = response.data;
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(userData));
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setUser(userData);
+            return userData;
+        } catch (error) {
+            throw error;
+        }
     };
 
     const logout = () => {

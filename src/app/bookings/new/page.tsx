@@ -36,7 +36,7 @@ function BookingForm() {
 
     const fetchStation = async () => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/stations/${stationId}`);
+            const response = await axios.get(`/api/stations/${stationId}`);
             setStation(response.data);
         } catch (error) {
             toast.error('Station not found');
@@ -63,7 +63,7 @@ function BookingForm() {
             
             const endTime = new Date(startTime.getTime() + duration * 60000);
 
-            await axios.post('http://localhost:5001/api/bookings', {
+            await axios.post('/api/bookings', {
                 userId: user.id,
                 stationId: station._id,
                 startTime,
