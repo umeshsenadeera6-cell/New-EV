@@ -7,6 +7,8 @@ import dynamic from 'next/dynamic';
 import { Search, Filter, MapPin, Zap, Clock, Star, ArrowRight, Loader2, Navigation } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
+
 
 // Dynamically import Map to avoid SSR issues with Leaflet
 const Map = dynamic(() => import('@/components/Map'), { 
@@ -14,12 +16,14 @@ const Map = dynamic(() => import('@/components/Map'), {
     loading: () => <div className="h-full w-full bg-gray-100 animate-pulse rounded-3xl flex items-center justify-center text-gray-400">Loading Map...</div>
 });
 
+import { Station } from '@/types';
+
 export default function StationsPage() {
-    const [stations, setStations] = useState([]);
+    const [stations, setStations] = useState<Station[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedStation, setSelectedStation] = useState(null);
-    const [mapCenter, setMapCenter] = useState([6.9271, 79.8612]); // Colombo
+    const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+    const [mapCenter, setMapCenter] = useState<[number, number]>([6.9271, 79.8612]); // Colombo
 
     useEffect(() => {
         fetchStations();
@@ -36,7 +40,7 @@ export default function StationsPage() {
         }
     };
 
-    const handleStationSelect = (station) => {
+    const handleStationSelect = (station: Station) => {
         setSelectedStation(station);
         setMapCenter([station.location.coordinates[1], station.location.coordinates[0]]);
     };

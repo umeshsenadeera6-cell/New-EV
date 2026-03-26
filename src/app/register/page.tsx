@@ -19,7 +19,7 @@ export default function RegisterPage() {
         confirmPassword: ''
     });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (formData.password !== formData.confirmPassword) {
             return toast.error('Passwords do not match');
@@ -29,14 +29,14 @@ export default function RegisterPage() {
             await register(formData.name, formData.email, formData.password);
             toast.success('Account created successfully!');
             router.push('/stations');
-        } catch (error) {
+        } catch (error: any) {
             toast.error(error.response?.data?.message || 'Registration failed');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 

@@ -8,9 +8,11 @@ import { Plus, Edit, Trash2, TrendingUp, Users, Zap, DollarSign, Loader2, MapPin
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
+import { Station } from '@/types';
+
 export default function AdminDashboard() {
     const { user } = useAuth();
-    const [stations, setStations] = useState([]);
+    const [stations, setStations] = useState<Station[]>([]);
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState({
         totalRevenue: 2450.50,

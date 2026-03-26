@@ -9,9 +9,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 
+import { Station, Booking } from '@/types';
+
 export default function BookingsPage() {
     const { user } = useAuth();
-    const [bookings, setBookings] = useState([]);
+    const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -22,7 +24,7 @@ export default function BookingsPage() {
 
     const fetchBookings = async () => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/bookings/user/${user.id}`);
+            const response = await axios.get(`http://localhost:5001/api/bookings/user/${user?.id}`);
             setBookings(response.data);
         } catch (error) {
             toast.error('Failed to load bookings');
@@ -31,7 +33,7 @@ export default function BookingsPage() {
         }
     };
 
-    const getStatusStyles = (status) => {
+    const getStatusStyles = (status: Booking['status']) => {
         switch (status) {
             case 'Confirmed': return 'bg-blue-100 text-blue-700';
             case 'Ongoing': return 'bg-emerald-100 text-emerald-700 animate-pulse';

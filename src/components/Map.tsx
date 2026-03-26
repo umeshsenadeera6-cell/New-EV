@@ -15,13 +15,26 @@ const DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const ChangeView = ({ center, zoom }) => {
+import { Station } from '@/types';
+
+interface ChangeViewProps {
+    center: [number, number];
+    zoom: number;
+}
+
+const ChangeView: React.FC<ChangeViewProps> = ({ center, zoom }) => {
     const map = useMap();
     map.setView(center, zoom);
     return null;
 };
 
-const Map = ({ stations, center, onMarkerClick }) => {
+interface MapProps {
+    stations: Station[];
+    center: [number, number];
+    onMarkerClick: (station: Station) => void;
+}
+
+const Map: React.FC<MapProps> = ({ stations, center, onMarkerClick }) => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {

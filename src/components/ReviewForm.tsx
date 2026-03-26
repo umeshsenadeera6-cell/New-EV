@@ -5,13 +5,18 @@ import { Star, Send, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
-const ReviewForm = ({ stationId, onReviewSubmit }) => {
+interface ReviewFormProps {
+    stationId: string;
+    onReviewSubmit?: () => void;
+}
+
+const ReviewForm: React.FC<ReviewFormProps> = ({ stationId, onReviewSubmit }) => {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [comment, setComment] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (rating === 0) return toast.error('Please select a rating');
         
